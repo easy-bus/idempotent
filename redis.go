@@ -24,5 +24,5 @@ func (ri redisIdempotent) Release(key string) error {
 }
 
 func New(client *redigo.Client) bus.IdempotentInterface {
-	return &redisIdempotent{client: client}
+	return redisIdempotent{client: client}
 }
