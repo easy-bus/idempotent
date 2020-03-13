@@ -1,10 +1,11 @@
 package redis_idempotent
 
 import (
-	"github.com/letsfire/redigo/mode/alone"
-	"github.com/stretchr/testify/assert"
 	"sync/atomic"
 	"testing"
+
+	"github.com/letsfire/redigo/mode/alone"
+	"github.com/stretchr/testify/assert"
 )
 
 var key = "test-key"
@@ -12,6 +13,7 @@ var idempotent = New(alone.NewClient())
 
 func BenchmarkRedisIdempotent(b *testing.B) {
 	var counter uint32
+	assert.Nil(b, idempotent.Release(key))
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			ok, err := idempotent.Acquire(key)
@@ -21,7 +23,7 @@ func BenchmarkRedisIdempotent(b *testing.B) {
 			}
 		}
 	})
-	assert.Equal(b, 1, counter)
+	assert.Equal(b, uint32(1), counter)
 	assert.Nil(b, idempotent.Release(key))
 	ok, err := idempotent.Acquire(key)
 	assert.Nil(b, err)
