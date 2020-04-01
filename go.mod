@@ -1,4 +1,4 @@
-module github.com/easy-bus/redis-idempotent
+module github.com/easy-bus/idempotent
 
 go 1.12
 

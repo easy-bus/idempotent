@@ -1,4 +1,4 @@
-package redis_idempotent
+package idempotent
 
 import (
 	"github.com/easy-bus/bus"
