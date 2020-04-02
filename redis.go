@@ -23,6 +23,6 @@ func (ri redisIdempotent) Release(key string) error {
 	return err
 }
 
-func New(client *redigo.Client) bus.IdempotentInterface {
+func NewRedis(client *redigo.Client) bus.IdempotentInterface {
 	return redisIdempotent{client: client}
 }

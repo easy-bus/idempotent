@@ -9,7 +9,7 @@ import (
 )
 
 var key = "test-key"
-var idempotent = New(alone.NewClient())
+var idempotent = NewRedis(alone.NewClient())
 
 func BenchmarkRedisIdempotent(b *testing.B) {
 	var counter uint32
