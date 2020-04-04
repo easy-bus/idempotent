@@ -11,13 +11,13 @@ type redisIdempotent struct {
 	client  *redigo.Client
 }
 
-func (ri redisIdempotent) Acquire(key string) (bool, error) {
+func (ri *redisIdempotent) Acquire(key string) (bool, error) {
 	return ri.client.Bool(func(conn redis.Conn) (interface{}, error) {
 		return conn.Do("HSETNX", ri.hashMap, key, 1)
 	})
 }
 
-func (ri redisIdempotent) Release(key string) error {
+func (ri *redisIdempotent) Release(key string) error {
 	_, err := ri.client.Execute(func(conn redis.Conn) (interface{}, error) {
 		return conn.Do("HDEL", ri.hashMap, key)
 	})
@@ -25,5 +25,5 @@ func (ri redisIdempotent) Release(key string) error {
 }
 
 func NewRedis(hashMap string, client *redigo.Client) bus.IdempotentInterface {
-	return redisIdempotent{hashMap: hashMap, client: client}
+	return &redisIdempotent{hashMap: hashMap, client: client}
 }
