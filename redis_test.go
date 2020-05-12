@@ -4,7 +4,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/letsfire/redigo/mode/alone"
+	"github.com/letsfire/redigo/v2/mode/alone"
 	"github.com/stretchr/testify/assert"
 )
 
